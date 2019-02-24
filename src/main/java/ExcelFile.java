@@ -8,6 +8,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ExcelFile. Класс представляет собой созданный и заполненный данными excel документ.
+ *
+ * @version:   0.1 25 февраля 2019
+ * @Copyright  Наталья
+ */
+
 public class ExcelFile {
 
     public static void main(String[] args) throws IOException {
@@ -82,10 +89,9 @@ public class ExcelFile {
 
     private static List<DataModel> fillData() throws IOException {
         List<DataModel> dataModels = new ArrayList<>();
-        DataModel dataTxt = new DataModel();
 
-        for(int x = 0; x < 34;  x++) {
-            dataModels.add(new DataModel(dataTxt.getCountry(), dataTxt.getRegion(), dataTxt.getCity(), dataTxt.getStreet()));
+        for(int x = 0; x < 30;  x++) {
+            dataModels.add(new DataModel());
         }
         return dataModels;
     }

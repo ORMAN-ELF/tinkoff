@@ -9,38 +9,28 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+
+/**
+ * DataModel. Класс представляет собой подготовленные данные для создания файлов pdf, excel.
+ *
+ * @version:   0.1 25 февраля 2019
+ * @Copyright  Наталья
+ */
+
+
 public class DataModel {
 
     private String name = setName();
     private String surname = setSurname();
     private String middlename = setMiddleName();
-    private String gender;
     private LocalDate date = getDateForAge();
-    private String inn;
-    private Integer zip;
-    private String country;
-    private String region;
-    private String city;
-    private String street;
-    private Integer house;
-    private Integer room;
 
-    DataModel() throws IOException {
-
-    }
-
-
-    DataModel(String country, String region, String city, String street) throws IOException {
-        this.country = country;
-        this.region = region;
-        this.city = city;
-        this.street = street;
-
-    }
+    DataModel() throws IOException {}
 
     private String setName() throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/main/resources/name.txt")),
-                "Cp1251"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                new FileInputStream(
+                        new File("src/main/resources/name.txt")), "Cp1251"));
         List<String> lines = new ArrayList<>();
         String line;
         while ((line = reader.readLine()) != null) {
@@ -57,9 +47,10 @@ public class DataModel {
         return name;
     }
 
-
     private String setSurname() throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/main/resources/surname.txt")),
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                new FileInputStream(
+                        new File("src/main/resources/surname.txt")),
                 "Cp1251"));
         List<String> lines = new ArrayList<>();
         String line;
@@ -74,13 +65,16 @@ public class DataModel {
     }
 
     String getSurname() throws IOException {
-        boolean forNameFimale = (name.endsWith("а")) || (name.endsWith("я"));
-        boolean forNameMale = (!(name.endsWith("а"))) && (!(name.endsWith("я")));
+        boolean forNameFimale = (name.endsWith("а"))
+                || (name.endsWith("я"));
+        boolean forNameMale = (!(name.endsWith("а")))
+                && (!(name.endsWith("я")));
 
         boolean forSurnameFimale = surname.endsWith("ва");
         boolean forSurnameMale = !(surname.endsWith("а"));
 
-        if (!((forNameFimale && forSurnameFimale) || (forNameMale && forSurnameMale))){
+        if (!((forNameFimale && forSurnameFimale)
+                || (forNameMale && forSurnameMale))){
             surname = setSurname();
             getSurname();
         }
@@ -93,8 +87,9 @@ public class DataModel {
     }
 
     private String setMiddleName() throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/main/resources/middlename.txt")),
-                "Cp1251"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                new FileInputStream(
+                        new File("src/main/resources/middlename.txt")),"Cp1251"));
         List<String> lines = new ArrayList<>();
         String line;
         while ((line = reader.readLine()) != null) {
@@ -115,7 +110,8 @@ public class DataModel {
         boolean forMiddleFimale = middlename.endsWith("вна");
         boolean forMiddleMale = middlename.endsWith("ч");
 
-        if (!((forSurnameFimale && forMiddleFimale) || (forSurnameMale && forMiddleMale))){
+        if (!((forSurnameFimale && forMiddleFimale)
+                || (forSurnameMale && forMiddleMale))){
             middlename = setMiddleName();
             getMiddlename();
         }
@@ -124,8 +120,9 @@ public class DataModel {
 
 
     String getCountry() throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/main/resources/country.txt")),
-                "Cp1251"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                new FileInputStream(
+                        new File("src/main/resources/country.txt")),"Cp1251"));
         List<String> lines = new ArrayList<>();
         String line;
         while ((line = reader.readLine()) != null) {
@@ -140,8 +137,9 @@ public class DataModel {
 
 
     String getRegion() throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/main/resources/region.txt")),
-                "Cp1251"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                new FileInputStream(
+                        new File("src/main/resources/region.txt")),"Cp1251"));
         List<String> lines = new ArrayList<>();
         String line;
         while ((line = reader.readLine()) != null) {
@@ -156,8 +154,9 @@ public class DataModel {
 
 
     String getCity() throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/main/resources/city.txt")),
-                "Cp1251"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                new FileInputStream(
+                        new File("src/main/resources/city.txt")),"Cp1251"));
         List<String> lines = new ArrayList<>();
         String line;
         while ((line = reader.readLine()) != null) {
@@ -172,14 +171,15 @@ public class DataModel {
 
 
     String getStreet() throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File("src/main/resources/street.txt")),
-                "Cp1251"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                new FileInputStream(
+                        new File("src/main/resources/street.txt")),"Cp1251"));
         List<String> lines = new ArrayList<>();
         String line;
         while ((line = reader.readLine()) != null) {
             lines.add(line);
         }
-        
+
         String [] street = lines.toArray(new String[0]);
         reader.close();
         int rnd = new Random().nextInt(street.length);
@@ -187,11 +187,10 @@ public class DataModel {
     }
 
 
-	
 	String getGender(){
         if (middlename.endsWith("вна")){
-            return gender = "Ж";
-        } else return gender = "М";
+            return "Ж";
+        } else return "М";
     }
 
 
@@ -203,7 +202,8 @@ public class DataModel {
         LocalDate endDate = LocalDate.now();
         long end = endDate.toEpochDay();
 
-        long randomEpochDay = ThreadLocalRandom.current().longs(start, end).findAny().getAsLong();
+        long randomEpochDay = ThreadLocalRandom.current()
+                .longs(start, end).findAny().getAsLong();
         return LocalDate.ofEpochDay(randomEpochDay);
 	}
 
@@ -225,23 +225,19 @@ public class DataModel {
 
 	String getInn(){
         String random = RandomStringUtils.random(10, false, true);
-        inn = "77" + random;
-		return inn;
+        return "77" + random;
 	}
 	
 	Integer getZip(){
-        zip = createRandomIntBetween(100000, 200000);
-        return zip;
+        return createRandomIntBetween(100000, 200000);
 	}
 	
 	Integer getHouse(){
-		house = createRandomIntBetween(1, 200);
-		return house;
+        return createRandomIntBetween(1, 200);
 	}
 	
 	Integer getRoom(){
-        room = createRandomIntBetween(1, 100);
-        return room;
+        return createRandomIntBetween(1, 100);
 	}
 
 }
