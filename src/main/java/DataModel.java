@@ -82,10 +82,6 @@ public class DataModel {
     }
 
 
-    private static int createRandomIntBetween(int start, int end) {
-        return start + (int) Math.round(Math.random() * (end - start));
-    }
-
     private String setMiddleName() throws IOException{
         BufferedReader reader = new BufferedReader(new InputStreamReader(
                 new FileInputStream(
@@ -193,7 +189,6 @@ public class DataModel {
         } else return "М";
     }
 
-
     private LocalDate getDateForAge() {
 
         LocalDate startDate = LocalDate.of(1990, 1, 1);
@@ -227,7 +222,11 @@ public class DataModel {
         String random = RandomStringUtils.random(10, false, true);
         return "77" + random;
 	}
-	
+
+    private static int createRandomIntBetween(int start, int end) {
+        return start + (int) Math.round(Math.random() * (end - start));
+    }
+
 	Integer getZip(){
         return createRandomIntBetween(100000, 200000);
 	}

@@ -60,13 +60,6 @@ public class ExcelFile {
 
     }
 
-    private static void deleteFile() {
-        File file = new File("../tinkoff/src/main/1.xls");
-        if(file.delete()){
-            System.out.println("Старый файл удален");
-        }else System.out.println("Файл для удаления не был найдет");
-    }
-
     // данными  из dataModel созданного в памяти Excel файла
     private static void createSheetHeader(HSSFSheet sheet, int rowNum, DataModel dataModel) throws IOException {
         Row row = sheet.createRow(rowNum);
@@ -94,6 +87,13 @@ public class ExcelFile {
             dataModels.add(new DataModel());
         }
         return dataModels;
+    }
+
+    private static void deleteFile() {
+        File file = new File("../tinkoff/src/main/1.xls");
+        if(file.delete()){
+            System.out.println("Старый файл удален");
+        }else System.out.println("Файл для удаления не был найдет");
     }
 
 }
