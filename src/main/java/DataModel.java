@@ -27,18 +27,21 @@ public class DataModel {
 
     DataModel() throws IOException {}
 
-    private String setName() throws IOException{
+    private String [] getMassiveDate(String path) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(
                 new FileInputStream(
-                        new File("src/main/resources/name.txt")), "Cp1251"));
+                        new File(path)), "Cp1251"));
         List<String> lines = new ArrayList<>();
         String line;
         while ((line = reader.readLine()) != null) {
             lines.add(line);
         }
+        return lines.toArray(new String[0]);
+    }
 
-        String [] sName = lines.toArray(new String[0]);
-        reader.close();
+    private String setName() throws IOException{
+        String path = "src/main/resources/name.txt";
+        String [] sName = getMassiveDate(path);
         int rnd = new Random().nextInt(sName.length);
         return sName[rnd];
     }
@@ -48,32 +51,21 @@ public class DataModel {
     }
 
     private String setSurname() throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
-                new FileInputStream(
-                        new File("src/main/resources/surname.txt")),
-                "Cp1251"));
-        List<String> lines = new ArrayList<>();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            lines.add(line);
-        }
-
-        String [] sname = lines.toArray(new String[0]);
-        reader.close();
+        String path = "src/main/resources/surname.txt";
+        String [] sname = getMassiveDate(path);
         int rnd = new Random().nextInt(sname.length);
         return sname[rnd];
     }
 
     String getSurname() throws IOException {
-        boolean forNameFimale = (name.endsWith("а"))
+        boolean forNameFemale = (name.endsWith("а"))
                 || (name.endsWith("я"));
         boolean forNameMale = (!(name.endsWith("а")))
                 && (!(name.endsWith("я")));
-
-        boolean forSurnameFimale = surname.endsWith("ва");
+        boolean forSurnameFemale = surname.endsWith("ва");
         boolean forSurnameMale = !(surname.endsWith("а"));
 
-        if (!((forNameFimale && forSurnameFimale)
+        if (!((forNameFemale && forSurnameFemale)
                 || (forNameMale && forSurnameMale))){
             surname = setSurname();
             getSurname();
@@ -81,32 +73,21 @@ public class DataModel {
         return surname;
     }
 
-
     private String setMiddleName() throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
-                new FileInputStream(
-                        new File("src/main/resources/middlename.txt")),"Cp1251"));
-        List<String> lines = new ArrayList<>();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            lines.add(line);
-        }
-
-        String [] mname = lines.toArray(new String[0]);
-        reader.close();
-        int rnd = new Random().nextInt(mname.length);
-        return mname[rnd];
+        String path = "src/main/resources/middlename.txt";
+        String [] setMiddlename = getMassiveDate(path);
+        int rnd = new Random().nextInt(setMiddlename.length);
+        return setMiddlename[rnd];
     }
 
     String getMiddlename() throws IOException {
-
-        boolean forSurnameFimale = surname.endsWith("ва");
+        boolean forSurnameFemale = surname.endsWith("ва");
         boolean forSurnameMale = !(surname.endsWith("а"));
 
-        boolean forMiddleFimale = middlename.endsWith("вна");
+        boolean forMiddleFemale = middlename.endsWith("вна");
         boolean forMiddleMale = middlename.endsWith("ч");
 
-        if (!((forSurnameFimale && forMiddleFimale)
+        if (!((forSurnameFemale && forMiddleFemale)
                 || (forSurnameMale && forMiddleMale))){
             middlename = setMiddleName();
             getMiddlename();
@@ -114,74 +95,33 @@ public class DataModel {
         return middlename;
     }
 
-
     String getCountry() throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
-                new FileInputStream(
-                        new File("src/main/resources/country.txt")),"Cp1251"));
-        List<String> lines = new ArrayList<>();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            lines.add(line);
-        }
-
-        String [] country = lines.toArray(new String[0]);
-        reader.close();
+        String path = "src/main/resources/country.txt";
+        String [] country = getMassiveDate(path);
         int rnd = new Random().nextInt(country.length);
         return country[rnd];
     }
 
-
     String getRegion() throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
-                new FileInputStream(
-                        new File("src/main/resources/region.txt")),"Cp1251"));
-        List<String> lines = new ArrayList<>();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            lines.add(line);
-        }
-
-        String [] region = lines.toArray(new String[0]);
-        reader.close();
+        String path = "src/main/resources/region.txt";
+        String [] region = getMassiveDate(path);
         int rnd = new Random().nextInt(region.length);
         return region[rnd];
     }
 
-
     String getCity() throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
-                new FileInputStream(
-                        new File("src/main/resources/city.txt")),"Cp1251"));
-        List<String> lines = new ArrayList<>();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            lines.add(line);
-        }
-
-        String [] city = lines.toArray(new String[0]);
-        reader.close();
+        String path = "src/main/resources/city.txt";
+        String [] city = getMassiveDate(path);
         int rnd = new Random().nextInt(city.length);
         return city[rnd];
     }
 
-
     String getStreet() throws IOException{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
-                new FileInputStream(
-                        new File("src/main/resources/street.txt")),"Cp1251"));
-        List<String> lines = new ArrayList<>();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            lines.add(line);
-        }
-
-        String [] street = lines.toArray(new String[0]);
-        reader.close();
+        String path = "src/main/resources/street.txt";
+        String [] street = getMassiveDate(path);
         int rnd = new Random().nextInt(street.length);
         return street[rnd];
     }
-
 
 	String getGender(){
         if (middlename.endsWith("вна")){
@@ -190,7 +130,6 @@ public class DataModel {
     }
 
     private LocalDate getDateForAge() {
-
         LocalDate startDate = LocalDate.of(1990, 1, 1);
         long start = startDate.toEpochDay();
 
@@ -209,14 +148,12 @@ public class DataModel {
     }
 
     Integer getAge(){
-
         LocalDate today = LocalDate.now();
         LocalDate birthday = date;
 
         Period period = Period.between(birthday, today);
         return period.getYears();
     }
-
 
 	String getInn(){
         String random = RandomStringUtils.random(10, false, true);
