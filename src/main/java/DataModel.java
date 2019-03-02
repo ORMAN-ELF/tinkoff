@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * DataModel. Класс представляет собой подготовленные данные для создания файлов pdf, excel.
  *
- * @version:   0.1 25 февраля 2019
+ * @version:   0.2 03 марта 2019
  * @Copyright  Наталья
  */
 
