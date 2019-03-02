@@ -55,15 +55,13 @@ public class ExcelFile {
             e.printStackTrace();
         }
 
-        File file = new File("1.xls");
+        File file = new File("src/main/1.xls");
         System.out.println("Файл создан. Путь: "+ file.getAbsolutePath());
-
     }
 
     // данными  из dataModel созданного в памяти Excel файла
     private static void createSheetHeader(HSSFSheet sheet, int rowNum, DataModel dataModel) throws IOException {
         Row row = sheet.createRow(rowNum);
-        //for (int x =0; x < 10; x++){
         row.createCell(0).setCellValue(dataModel.getName());
         row.createCell(1).setCellValue(dataModel.getSurname());
         row.createCell(2).setCellValue(dataModel.getMiddlename());
@@ -81,9 +79,11 @@ public class ExcelFile {
     }
 
     private static List<DataModel> fillData() throws IOException {
-        List<DataModel> dataModels = new ArrayList<>();
 
-        for(int x = 0; x < 30;  x++) {
+        List<DataModel> dataModels = new ArrayList<>();
+        DataModel dataModel = new DataModel();
+
+        for (int i = 0; i < dataModel.getEndList(); i++) {
             dataModels.add(new DataModel());
         }
         return dataModels;

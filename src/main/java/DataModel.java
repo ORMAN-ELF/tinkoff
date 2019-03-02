@@ -20,9 +20,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class DataModel {
 
-    private String name = setName();
-    private String surname = setSurname();
-    private String middlename = setMiddleName();
+    private String name = randomName();
+    private String surname = randomSurname();
+    private String middlename = randomMiddleName();
     private LocalDate date = getDateForAge();
 
     DataModel() throws IOException {}
@@ -39,7 +39,7 @@ public class DataModel {
         return lines.toArray(new String[0]);
     }
 
-    private String setName() throws IOException{
+    private String randomName() throws IOException{
         String path = "src/main/resources/name.txt";
         String [] sName = getMassiveDate(path);
         int rnd = new Random().nextInt(sName.length);
@@ -50,7 +50,7 @@ public class DataModel {
         return name;
     }
 
-    private String setSurname() throws IOException{
+    private String randomSurname() throws IOException{
         String path = "src/main/resources/surname.txt";
         String [] sname = getMassiveDate(path);
         int rnd = new Random().nextInt(sname.length);
@@ -67,17 +67,17 @@ public class DataModel {
 
         if (!((forNameFemale && forSurnameFemale)
                 || (forNameMale && forSurnameMale))){
-            surname = setSurname();
+            surname = randomSurname();
             getSurname();
         }
         return surname;
     }
 
-    private String setMiddleName() throws IOException{
+    private String randomMiddleName() throws IOException{
         String path = "src/main/resources/middlename.txt";
-        String [] setMiddlename = getMassiveDate(path);
-        int rnd = new Random().nextInt(setMiddlename.length);
-        return setMiddlename[rnd];
+        String [] middlename = getMassiveDate(path);
+        int rnd = new Random().nextInt(middlename.length);
+        return middlename[rnd];
     }
 
     String getMiddlename() throws IOException {
@@ -89,7 +89,7 @@ public class DataModel {
 
         if (!((forSurnameFemale && forMiddleFemale)
                 || (forSurnameMale && forMiddleMale))){
-            middlename = setMiddleName();
+            middlename = randomMiddleName();
             getMiddlename();
         }
         return middlename;
@@ -156,8 +156,33 @@ public class DataModel {
     }
 
 	String getInn(){
-        String random = RandomStringUtils.random(10, false, true);
-        return "77" + random;
+        int[] IFNS= {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+                28, 29, 30, 31, 33, 34, 35, 36, 43, 45, 46, 47, 48, 49, 50, 51};
+        int randomIFNS = new Random().nextInt(IFNS.length);
+        String intIFNS = Integer.toString(IFNS[randomIFNS]);
+        if (Integer.parseInt(intIFNS) < 10){
+            intIFNS = "0" + intIFNS;
+        }
+        String random = RandomStringUtils.random(6, false, true);
+
+        String a = "77" + intIFNS + random;
+        String strArr[] = a.split("");
+        int nINN[] = new int[strArr.length];
+        for (int i = 0; i < strArr.length; i++) {
+            nINN[i] = Integer.parseInt(strArr[i]);
+        }
+
+        int n1 = (nINN[0] * 7 + nINN[1] * 2 + nINN[2] * 4 + nINN[3] * 10
+                + nINN[4] * 3 + nINN[5] * 5 + nINN[6] * 9 + nINN[7] * 4
+                + nINN[8] * 6 + nINN[9] * 8) % 11;
+
+        int n2 = (nINN[0] * 3 + nINN[1] * 7 + nINN[2] * 2 + nINN[3] * 4
+                + nINN[4] * 10 + nINN[5] * 3 + nINN[6] * 5 + nINN[7] * 9
+                + nINN[8] * 4 + nINN[9] * 6 + n1 * 8) % 11;
+        if (n1 == 10) { n1 = 0;}
+        if (n2 == 10) { n2 = 0;}
+
+        return "77" + intIFNS + random + n1 + n2;
 	}
 
     private static int createRandomIntBetween(int start, int end) {
@@ -175,5 +200,11 @@ public class DataModel {
 	Integer getRoom(){
         return createRandomIntBetween(1, 100);
 	}
+
+    Integer getEndList() throws IOException {
+        String path = "src/main/resources/name.txt";
+        String [] forLength = getMassiveDate(path);
+        return forLength.length;
+    }
 
 }
