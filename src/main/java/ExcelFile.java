@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * ExcelFile. Класс представляет собой созданный и заполненный данными excel документ.
  *
- * @version:   0.1 25 февраля 2019
+ * @version:   0.3 08 марта 2019
  * @Copyright  Наталья
  */
 
@@ -50,18 +50,6 @@ public class ExcelFile {
 
                 System.out.println(title + " " + name + " " + lastname + " " + street + " " + city + " " + state);
             }
-
-            //JSON from String to Object
-            //MyPojo<Results> obj2 = mapper.readValue(response.toString(), new TypeReference<List<Results>>() {});
-            //System.out.println(obj2.getResults());
-
-
-            //ObjectMapper mapper = new ObjectMapper(); 
-            //Results name = mapper.readValue(response.toString().getBytes(), Results.class);
-            //Name name2 = mapper.readValue(String.valueOf(response).getEntity().getContent(), Name.class);
-            //System.out.println(name.getName());
-
-            //DataModel user = mapper.readValue(response.getEntity().getContent(), DataModel.class);
 
         } catch (Exception e){
             e.printStackTrace();
