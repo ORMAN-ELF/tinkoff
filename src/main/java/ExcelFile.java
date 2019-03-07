@@ -1,12 +1,16 @@
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ArrayNode;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * ExcelFile. Класс представляет собой созданный и заполненный данными excel документ.
@@ -17,7 +21,51 @@ import java.util.List;
 
 public class ExcelFile {
 
-    public static void main(String[] args) throws IOException {
+
+    public static void main(String[] args) throws Exception {
+
+        GetJSON getJSON = new GetJSON();
+        StringBuffer response = getJSON.getJson();
+        System.out.println(response);
+
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(String.valueOf(response));
+        try {
+            if (rootNode instanceof ArrayNode) {
+
+                MyPojo[] objects = mapper.readValue(rootNode.toString(), MyPojo[].class);
+                System.out.println(objects);
+
+            } else if (rootNode instanceof JsonNode) {
+
+                MyPojo object = mapper.readValue(rootNode.toString(), MyPojo.class);
+                String title = object.getResults().iterator().next().getName().getTitle();
+                String name = object.getResults().iterator().next().getName().getFirst();
+                String lastname = object.getResults().iterator().next().getName().getLast();
+
+                String street = object.getResults().iterator().next().getLocation().getStreet();
+                String city = object.getResults().iterator().next().getLocation().getCity();
+                String state = object.getResults().iterator().next().getName().getLast();
+
+                System.out.println(title + " " + name + " " + lastname + " " + street + " " + city + " " + state);
+            }
+
+            //JSON from String to Object
+            //MyPojo<Results> obj2 = mapper.readValue(response.toString(), new TypeReference<List<Results>>() {});
+            //System.out.println(obj2.getResults());
+
+
+            //ObjectMapper mapper = new ObjectMapper(); 
+            //Results name = mapper.readValue(response.toString().getBytes(), Results.class);
+            //Name name2 = mapper.readValue(String.valueOf(response).getEntity().getContent(), Name.class);
+            //System.out.println(name.getName());
+
+            //DataModel user = mapper.readValue(response.getEntity().getContent(), DataModel.class);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         // создание самого excel файла в памяти
         HSSFWorkbook workbook = new HSSFWorkbook();
@@ -57,7 +105,9 @@ public class ExcelFile {
 
         File file = new File("src/main/1.xls");
         System.out.println("Файл создан. Путь: "+ file.getAbsolutePath());
+
     }
+
 
     // данными  из dataModel созданного в памяти Excel файла
     private static void createSheetHeader(HSSFSheet sheet, int rowNum, DataModel dataModel) throws IOException {
@@ -81,9 +131,8 @@ public class ExcelFile {
     private static List<DataModel> fillData() throws IOException {
 
         List<DataModel> dataModels = new ArrayList<>();
-        DataModel dataModel = new DataModel();
 
-        for (int i = 0; i < dataModel.getEndList(); i++) {
+        for (int i = 0; i < DataModel.createRandomIntBetween(1, 100); i++) {
             dataModels.add(new DataModel());
         }
         return dataModels;

@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 
 
-public class DataModel {
+class DataModel {
 
     private String name = randomName();
     private String surname = randomSurname();
@@ -27,7 +27,8 @@ public class DataModel {
 
     DataModel() throws IOException {}
 
-    private String [] getMassiveDate(String path) throws IOException {
+
+    private String [] getMassiveData(String path) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(
                 new FileInputStream(
                         new File(path)), "Cp1251"));
@@ -39,11 +40,13 @@ public class DataModel {
         return lines.toArray(new String[0]);
     }
 
+     private Integer getRandomFromMassive(String path) throws IOException {
+         return new Random().nextInt(getMassiveData(path).length);
+    }
+
     private String randomName() throws IOException{
         String path = "src/main/resources/name.txt";
-        String [] sName = getMassiveDate(path);
-        int rnd = new Random().nextInt(sName.length);
-        return sName[rnd];
+        return getMassiveData(path)[getRandomFromMassive(path)];
     }
 
     String getName() {
@@ -52,9 +55,7 @@ public class DataModel {
 
     private String randomSurname() throws IOException{
         String path = "src/main/resources/surname.txt";
-        String [] sname = getMassiveDate(path);
-        int rnd = new Random().nextInt(sname.length);
-        return sname[rnd];
+        return getMassiveData(path)[getRandomFromMassive(path)];
     }
 
     String getSurname() throws IOException {
@@ -75,9 +76,7 @@ public class DataModel {
 
     private String randomMiddleName() throws IOException{
         String path = "src/main/resources/middlename.txt";
-        String [] middlename = getMassiveDate(path);
-        int rnd = new Random().nextInt(middlename.length);
-        return middlename[rnd];
+        return getMassiveData(path)[getRandomFromMassive(path)];
     }
 
     String getMiddlename() throws IOException {
@@ -97,30 +96,22 @@ public class DataModel {
 
     String getCountry() throws IOException{
         String path = "src/main/resources/country.txt";
-        String [] country = getMassiveDate(path);
-        int rnd = new Random().nextInt(country.length);
-        return country[rnd];
+        return getMassiveData(path)[getRandomFromMassive(path)];
     }
 
     String getRegion() throws IOException{
         String path = "src/main/resources/region.txt";
-        String [] region = getMassiveDate(path);
-        int rnd = new Random().nextInt(region.length);
-        return region[rnd];
+        return getMassiveData(path)[getRandomFromMassive(path)];
     }
 
     String getCity() throws IOException{
         String path = "src/main/resources/city.txt";
-        String [] city = getMassiveDate(path);
-        int rnd = new Random().nextInt(city.length);
-        return city[rnd];
+        return getMassiveData(path)[getRandomFromMassive(path)];
     }
 
     String getStreet() throws IOException{
         String path = "src/main/resources/street.txt";
-        String [] street = getMassiveDate(path);
-        int rnd = new Random().nextInt(street.length);
-        return street[rnd];
+        return getMassiveData(path)[getRandomFromMassive(path)];
     }
 
 	String getGender(){
@@ -185,7 +176,7 @@ public class DataModel {
         return "77" + intIFNS + random + n1 + n2;
 	}
 
-    private static int createRandomIntBetween(int start, int end) {
+    static int createRandomIntBetween(int start, int end) {
         return start + (int) Math.round(Math.random() * (end - start));
     }
 
@@ -200,11 +191,5 @@ public class DataModel {
 	Integer getRoom(){
         return createRandomIntBetween(1, 100);
 	}
-
-    Integer getEndList() throws IOException {
-        String path = "src/main/resources/name.txt";
-        String [] forLength = getMassiveDate(path);
-        return forLength.length;
-    }
 
 }
