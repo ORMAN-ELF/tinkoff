@@ -1,9 +1,6 @@
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.ArrayNode;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,37 +20,6 @@ public class ExcelFile {
 
 
     public static void main(String[] args) throws Exception {
-
-        GetJSON getJSON = new GetJSON();
-        StringBuffer response = getJSON.getJson();
-        System.out.println(response);
-
-
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(String.valueOf(response));
-        try {
-            if (rootNode instanceof ArrayNode) {
-
-                MyPojo[] objects = mapper.readValue(rootNode.toString(), MyPojo[].class);
-                System.out.println(objects);
-
-            } else if (rootNode instanceof JsonNode) {
-
-                MyPojo object = mapper.readValue(rootNode.toString(), MyPojo.class);
-                String title = object.getResults().iterator().next().getName().getTitle();
-                String name = object.getResults().iterator().next().getName().getFirst();
-                String lastname = object.getResults().iterator().next().getName().getLast();
-
-                String street = object.getResults().iterator().next().getLocation().getStreet();
-                String city = object.getResults().iterator().next().getLocation().getCity();
-                String state = object.getResults().iterator().next().getName().getLast();
-
-                System.out.println(title + " " + name + " " + lastname + " " + street + " " + city + " " + state);
-            }
-
-        } catch (Exception e){
-            e.printStackTrace();
-        }
 
         // создание самого excel файла в памяти
         HSSFWorkbook workbook = new HSSFWorkbook();
@@ -98,20 +64,45 @@ public class ExcelFile {
 
 
     // данными  из dataModel созданного в памяти Excel файла
-    private static void createSheetHeader(HSSFSheet sheet, int rowNum, DataModel dataModel) throws IOException {
+    private static void createSheetHeader(HSSFSheet sheet, int rowNum, DataModel dataModel) throws Exception {
         Row row = sheet.createRow(rowNum);
-        row.createCell(0).setCellValue(dataModel.getName());
-        row.createCell(1).setCellValue(dataModel.getSurname());
-        row.createCell(2).setCellValue(dataModel.getMiddlename());
+
+        GetJSON getJSON = new GetJSON();
+        DataModelAPI dataModelAPI = new DataModelAPI();
+
+        if (getJSON.getJson() !=null){
+
+            String whatDataModel = "dataModelAPI";
+            row.createCell(0).setCellValue(dataModelAPI.getName());
+            row.createCell(1).setCellValue(dataModelAPI.getSurname());
+            row.createCell(2).setCellValue(dataModelAPI.getMiddlename());
+            row.createCell(8).setCellValue(dataModelAPI.getCountry());
+            row.createCell(9).setCellValue(dataModelAPI.getRegion());
+            row.createCell(10).setCellValue(dataModelAPI.getCity());
+            row.createCell(11).setCellValue(dataModelAPI.getStreet());
+
+        } else {
+            row.createCell(0).setCellValue(dataModel.getName());
+            row.createCell(1).setCellValue(dataModel.getSurname());
+            row.createCell(2).setCellValue(dataModel.getMiddlename());
+            row.createCell(8).setCellValue(dataModel.getCountry());
+            row.createCell(9).setCellValue(dataModel.getRegion());
+            row.createCell(10).setCellValue(dataModel.getCity());
+            row.createCell(11).setCellValue(dataModel.getStreet());
+        }
+
+        //row.createCell(0).setCellValue(dataModel.getName());
+        //row.createCell(1).setCellValue(dataModel.getSurname());
+        //row.createCell(2).setCellValue(dataModel.getMiddlename());
 		row.createCell(3).setCellValue(dataModel.getAge());
 		row.createCell(4).setCellValue(dataModel.getGender());
 		row.createCell(5).setCellValue(dataModel.getDate());
 		row.createCell(6).setCellValue(dataModel.getInn());
 		row.createCell(7).setCellValue(dataModel.getZip());
-        row.createCell(8).setCellValue(dataModel.getCountry());
-        row.createCell(9).setCellValue(dataModel.getRegion());
-        row.createCell(10).setCellValue(dataModel.getCity());
-        row.createCell(11).setCellValue(dataModel.getStreet());
+        //row.createCell(8).setCellValue(dataModel.getCountry());
+        //row.createCell(9).setCellValue(dataModel.getRegion());
+        //row.createCell(10).setCellValue(dataModel.getCity());
+        //row.createCell(11).setCellValue(dataModel.getStreet());
 		row.createCell(12).setCellValue(dataModel.getHouse());
 		row.createCell(13).setCellValue(dataModel.getRoom());
     }
@@ -119,8 +110,9 @@ public class ExcelFile {
     private static List<DataModel> fillData() throws IOException {
 
         List<DataModel> dataModels = new ArrayList<>();
-
-        for (int i = 0; i < DataModel.createRandomIntBetween(1, 100); i++) {
+int a = DataModel.createRandomIntBetween(1, 100);
+        System.out.println(a);
+        for (int i = 0; i < a; i++) {
             dataModels.add(new DataModel());
         }
         return dataModels;

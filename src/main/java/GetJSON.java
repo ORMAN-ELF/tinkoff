@@ -6,7 +6,7 @@ import java.net.URL;
 class GetJSON {
 
     StringBuffer getJson() throws Exception{
-        String url = "https://randomuser.me/api/?results=25&inc=name,location&noinfo";
+        String url = "https://randomuser.me/api/?inc=name,location&noinfo";
 
         URL obj = new URL(url);
         try {
