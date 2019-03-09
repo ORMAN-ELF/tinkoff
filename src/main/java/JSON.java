@@ -3,7 +3,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-class GetJSON {
+class JSON {
 
     StringBuffer getJson() throws Exception{
         String url = "https://randomuser.me/api/?inc=name,location&noinfo";

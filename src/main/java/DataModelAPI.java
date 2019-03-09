@@ -1,95 +1,37 @@
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import java.io.IOException;
+class DataModelAPI {
 
-public class DataModelAPI {
+    DataModelAPI() {}
 
-    static String name;
-    static String surname;
-    static String street;
-    static String city;
-    static String country;
-
-
-    DataModelAPI() throws IOException {}
-
-
-
-    public static void getModelAPI() throws Exception {
-        //GetJSON getJSON = new GetJSON();
-        //StringBuffer response = getJSON.getJson();
-        //System.out.println(response);
-
-
-        //ObjectMapper mapper = new ObjectMapper();
-        //JsonNode rootNode = mapper.readTree(String.valueOf(response));
-        //try {
-            //if (rootNode instanceof ArrayNode) {
-
-                //MyPojo[] objects = mapper.readValue(rootNode.toString(), MyPojo[].class);
-                //System.out.println(Arrays.toString(objects));
-
-            //} else if (rootNode instanceof JsonNode) {
-
-                //MyPojo object = mapper.readValue(rootNode.toString(), MyPojo.class);
-                //title = object.getResults().iterator().next().getName().getTitle();
-                //name = object.getResults().iterator().next().getName().getFirst();
-                //lastname = object.getResults().iterator().next().getName().getLast();
-
-                //street = object.getResults().iterator().next().getLocation().getStreet();
-                //city = object.getResults().iterator().next().getLocation().getCity();
-                //state = object.getResults().iterator().next().getName().getLast();
-
-                //System.out.println(title + " " + name + " " + lastname + " " + street + " " + city + " " + state);
-            //}
-
-        //} catch (Exception e){
-            //e.printStackTrace();
-        //}
+    private static MyPojo getModelAPI() throws Exception {
+        JSON getJSON = new JSON();
+        StringBuffer response = getJSON.getJson();
+        System.out.println(response);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(String.valueOf(response));
+        return mapper.readValue(rootNode.toString(), MyPojo.class);
     }
 
     String getName() throws Exception {
 
-        GetJSON getJSON = new GetJSON();
-        StringBuffer response = getJSON.getJson();
-        System.out.println(response);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(String.valueOf(response));
-        MyPojo object = mapper.readValue(rootNode.toString(), MyPojo.class);
-        name = object.getResults().iterator().next().getName().getFirst();
-
-        return name;
+        return getModelAPI().getResults().iterator().next().getName().getFirst();
     }
 
     String getSurname() throws Exception {
 
-        GetJSON getJSON = new GetJSON();
-        StringBuffer response = getJSON.getJson();
-        System.out.println(response);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(String.valueOf(response));
-        MyPojo object = mapper.readValue(rootNode.toString(), MyPojo.class);
-        surname = object.getResults().iterator().next().getName().getLast();
-
-        return surname;
+        return getModelAPI().getResults().iterator().next().getName().getLast();
     }
 
-    String getMiddlename() throws Exception {
+    String getMiddlename() {
 
         return "-";
     }
 
     String getCountry() throws Exception{
-        GetJSON getJSON = new GetJSON();
-        StringBuffer response = getJSON.getJson();
-        System.out.println(response);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(String.valueOf(response));
-        MyPojo object = mapper.readValue(rootNode.toString(), MyPojo.class);
-        country = object.getResults().iterator().next().getLocation().getState();
 
-        return country;
+        return getModelAPI().getResults().iterator().next().getLocation().getState();
     }
 
     String getRegion() {
@@ -97,27 +39,13 @@ public class DataModelAPI {
     }
 
     String getCity() throws Exception{
-        GetJSON getJSON = new GetJSON();
-        StringBuffer response = getJSON.getJson();
-        System.out.println(response);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(String.valueOf(response));
-        MyPojo object = mapper.readValue(rootNode.toString(), MyPojo.class);
-        city = object.getResults().iterator().next().getLocation().getCity();
 
-        return city;
+        return getModelAPI().getResults().iterator().next().getLocation().getCity();
     }
 
     String getStreet() throws Exception{
-        GetJSON getJSON = new GetJSON();
-        StringBuffer response = getJSON.getJson();
-        System.out.println(response);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(String.valueOf(response));
-        MyPojo object = mapper.readValue(rootNode.toString(), MyPojo.class);
-        street = object.getResults().iterator().next().getLocation().getStreet();
 
-        return street;
+        return getModelAPI().getResults().iterator().next().getLocation().getStreet();
     }
 
 }

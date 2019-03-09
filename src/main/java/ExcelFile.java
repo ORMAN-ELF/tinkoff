@@ -67,7 +67,7 @@ public class ExcelFile {
     private static void createSheetHeader(HSSFSheet sheet, int rowNum, DataModel dataModel) throws Exception {
         Row row = sheet.createRow(rowNum);
 
-        GetJSON getJSON = new GetJSON();
+        JSON getJSON = new JSON();
         DataModelAPI dataModelAPI = new DataModelAPI();
 
         if (getJSON.getJson() !=null){
@@ -110,8 +110,8 @@ public class ExcelFile {
     private static List<DataModel> fillData() throws IOException {
 
         List<DataModel> dataModels = new ArrayList<>();
-int a = DataModel.createRandomIntBetween(1, 100);
-        System.out.println(a);
+        int a = DataModel.createRandomIntBetween(1, 30);
+
         for (int i = 0; i < a; i++) {
             dataModels.add(new DataModel());
         }
