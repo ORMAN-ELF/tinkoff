@@ -1,41 +1,22 @@
-import com.fasterxml.jackson.annotation.*;
-import org.apache.commons.lang.builder.ToStringBuilder;
+package com.app;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "street",
-    "city",
-    "state",
-    "postcode",
-    "coordinates",
-    "timezone"
-})
 public class Location {
 
-    @JsonProperty("street")
     private String street;
-    @JsonProperty("city")
     private String city;
-    @JsonProperty("state")
     private String state;
-    @JsonProperty("postcode")
     private String postcode;
-    @JsonProperty("coordinates")
     private Coordinates coordinates;
-    @JsonProperty("timezone")
     private Timezone timezone;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
-    @JsonProperty("street")
-    public String getStreet() {
+    String getStreet() {
         return street;
     }
 
-    @JsonProperty("street")
     public void setStreet(String street) {
         this.street = street;
     }
@@ -45,12 +26,10 @@ public class Location {
         return this;
     }
 
-    @JsonProperty("city")
-    public String getCity() {
+    String getCity() {
         return city;
     }
 
-    @JsonProperty("city")
     public void setCity(String city) {
         this.city = city;
     }
@@ -60,12 +39,10 @@ public class Location {
         return this;
     }
 
-    @JsonProperty("state")
-    public String getState() {
+    String getState() {
         return state;
     }
 
-    @JsonProperty("state")
     public void setState(String state) {
         this.state = state;
     }
@@ -75,12 +52,10 @@ public class Location {
         return this;
     }
 
-    @JsonProperty("postcode")
-    public String getPostcode() {
+    String getPostcode() {
         return postcode;
     }
 
-    @JsonProperty("postcode")
     public void setPostcode(String postcode) {
         this.postcode = postcode;
     }
@@ -90,12 +65,10 @@ public class Location {
         return this;
     }
 
-    @JsonProperty("coordinates")
     public Coordinates getCoordinates() {
         return coordinates;
     }
 
-    @JsonProperty("coordinates")
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
@@ -105,12 +78,10 @@ public class Location {
         return this;
     }
 
-    @JsonProperty("timezone")
     public Timezone getTimezone() {
         return timezone;
     }
 
-    @JsonProperty("timezone")
     public void setTimezone(Timezone timezone) {
         this.timezone = timezone;
     }
@@ -120,12 +91,10 @@ public class Location {
         return this;
     }
 
-    @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
     }
 
-    @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
@@ -133,11 +102,6 @@ public class Location {
     public Location withAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this).append("street", street).append("city", city).append("state", state).append("postcode", postcode).append("coordinates", coordinates).append("timezone", timezone).append("additionalProperties", additionalProperties).toString();
     }
 
 }

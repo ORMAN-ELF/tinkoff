@@ -1,32 +1,20 @@
-import com.fasterxml.jackson.annotation.*;
-import org.apache.commons.lang.builder.ToStringBuilder;
-
+package com.app;
 import java.util.HashMap;
 import java.util.Map;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "title",
-    "first",
-    "last"
-})
 public class Name {
 
-    @JsonProperty("title")
     private String title;
-    @JsonProperty("first")
     private String first;
-    @JsonProperty("last")
     private String last;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("title")
-    public String getTitle() {
+    private Map<String, Object> additionalProperties = new HashMap<>();
+
+
+    String getTitle() {
         return title;
     }
 
-    @JsonProperty("title")
     public void setTitle(String title) {
         this.title = title;
     }
@@ -36,12 +24,10 @@ public class Name {
         return this;
     }
 
-    @JsonProperty("first")
-    public String getFirst() {
+    String getFirst() {
         return first;
     }
 
-    @JsonProperty("first")
     public void setFirst(String first) {
         this.first = first;
     }
@@ -51,12 +37,10 @@ public class Name {
         return this;
     }
 
-    @JsonProperty("last")
-    public String getLast() {
+    String getLast() {
         return last;
     }
 
-    @JsonProperty("last")
     public void setLast(String last) {
         this.last = last;
     }
@@ -66,12 +50,10 @@ public class Name {
         return this;
     }
 
-    @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
     }
 
-    @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
@@ -79,11 +61,6 @@ public class Name {
     public Name withAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this).append("title", title).append("first", first).append("last", last).append("additionalProperties", additionalProperties).toString();
     }
 
 }

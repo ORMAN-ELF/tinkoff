@@ -1,7 +1,16 @@
-import java.io.*;
+package com.app;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * JSON. Класс представляет собой запрос к API и ответ в формате JSON.
+ *
+ * @version:   0.1 10 марта 2019
+ * @Copyright  Наталья
+ */
 
 class JSON {
 
@@ -16,7 +25,6 @@ class JSON {
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String inputLine;
             StringBuffer response = new StringBuffer();
-
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
@@ -24,7 +32,7 @@ class JSON {
             return response;
 
         } catch (Exception e){
-            System.out.println("Отсутствует подключение к сети Интернет");
+           e.printStackTrace();
         }
 
         return null;

@@ -1,3 +1,5 @@
+package com.app;
+
 import org.apache.commons.lang.RandomStringUtils;
 
 import java.io.*;
@@ -13,15 +15,15 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * DataModel. Класс представляет собой подготовленные данные для создания файлов pdf, excel.
  *
- * @version:   0.3 08 марта 2019
+ * @version:   0.3 10 марта 2019
  * @Copyright  Наталья
  */
 
 class DataModel {
 
-    private String name = randomName();
-    private String surname = randomSurname();
-    private String middlename = randomMiddleName();
+    private String name = getNameFromTxt();
+    private String surname = getSurnameFromTxt();
+    private String middlename = getMiddlenameFromTxt();
     private LocalDate date = getDateForAge();
 
     DataModel() throws IOException {}
@@ -43,7 +45,7 @@ class DataModel {
          return new Random().nextInt(getMassiveData(path).length);
     }
 
-    private String randomName() throws IOException{
+    private String getNameFromTxt() throws IOException{
         String path = "src/main/resources/name.txt";
         return getMassiveData(path)[getRandomFromMassive(path)];
     }
@@ -52,7 +54,7 @@ class DataModel {
         return name;
     }
 
-    private String randomSurname() throws IOException{
+    private String getSurnameFromTxt() throws IOException{
         String path = "src/main/resources/surname.txt";
         return getMassiveData(path)[getRandomFromMassive(path)];
     }
@@ -67,13 +69,13 @@ class DataModel {
 
         if (!((forNameFemale && forSurnameFemale)
                 || (forNameMale && forSurnameMale))){
-            surname = randomSurname();
+            surname = getSurnameFromTxt();
             getSurname();
         }
         return surname;
     }
 
-    private String randomMiddleName() throws IOException{
+    private String getMiddlenameFromTxt() throws IOException{
         String path = "src/main/resources/middlename.txt";
         return getMassiveData(path)[getRandomFromMassive(path)];
     }
@@ -87,28 +89,28 @@ class DataModel {
 
         if (!((forSurnameFemale && forMiddleFemale)
                 || (forSurnameMale && forMiddleMale))){
-            middlename = randomMiddleName();
+            middlename = getMiddlenameFromTxt();
             getMiddlename();
         }
         return middlename;
     }
 
-    String getCountry() throws IOException{
+    String getCountryFromTxt() throws IOException{
         String path = "src/main/resources/country.txt";
         return getMassiveData(path)[getRandomFromMassive(path)];
     }
 
-    String getRegion() throws IOException{
+    String getRegionFromTxt() throws IOException{
         String path = "src/main/resources/region.txt";
         return getMassiveData(path)[getRandomFromMassive(path)];
     }
 
-    String getCity() throws IOException{
+    String getCityFromTxt() throws IOException{
         String path = "src/main/resources/city.txt";
         return getMassiveData(path)[getRandomFromMassive(path)];
     }
 
-    String getStreet() throws IOException{
+    String getStreetFromTxt() throws IOException{
         String path = "src/main/resources/street.txt";
         return getMassiveData(path)[getRandomFromMassive(path)];
     }

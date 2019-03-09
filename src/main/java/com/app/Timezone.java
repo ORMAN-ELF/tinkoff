@@ -1,29 +1,17 @@
-import com.fasterxml.jackson.annotation.*;
-import org.apache.commons.lang.builder.ToStringBuilder;
-
+package com.app;
 import java.util.HashMap;
 import java.util.Map;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "offset",
-    "description"
-})
 public class Timezone {
 
-    @JsonProperty("offset")
     private String offset;
-    @JsonProperty("description")
     private String description;
-    @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("offset")
     public String getOffset() {
         return offset;
     }
 
-    @JsonProperty("offset")
     public void setOffset(String offset) {
         this.offset = offset;
     }
@@ -33,12 +21,10 @@ public class Timezone {
         return this;
     }
 
-    @JsonProperty("description")
     public String getDescription() {
         return description;
     }
 
-    @JsonProperty("description")
     public void setDescription(String description) {
         this.description = description;
     }
@@ -48,12 +34,10 @@ public class Timezone {
         return this;
     }
 
-    @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
     }
 
-    @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
@@ -61,11 +45,6 @@ public class Timezone {
     public Timezone withAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this).append("offset", offset).append("description", description).append("additionalProperties", additionalProperties).toString();
     }
 
 }
