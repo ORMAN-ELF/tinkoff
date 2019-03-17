@@ -23,7 +23,7 @@ class DataModelAPI {
 
     String getGenderAPI() throws Exception {
         String gender = getModelAPI().getResults().iterator().next().getName().getTitle();
-        if (gender.equals("mr")){ return "mr"; } else{ return "mrs"; }
+        if (gender.equals("mr")){ return "м"; } else{ return "ж"; }
     }
 
     String getNameAPI() throws Exception {

@@ -7,8 +7,11 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.app.ConfigDB.*;
 
 
 /**
@@ -23,6 +26,7 @@ public class ExcelFile {
     private static Boolean internet;
 
     public static void main(String[] args) throws Exception {
+
 
         JSON getJSON = new JSON();
         internet = getJSON.getJson() != null;
@@ -73,38 +77,104 @@ public class ExcelFile {
     private static void createSheetHeader(HSSFSheet sheet, int rowNum, DataModel dataModel) throws Exception {
         var row = sheet.createRow(rowNum);
 
-        DataModelAPI dataModelAPI = new DataModelAPI();
-
         if (internet){
 
-            row.createCell(0).setCellValue(dataModelAPI.getNameAPI());
-            row.createCell(1).setCellValue(dataModelAPI.getSurnameAPI());
-            row.createCell(2).setCellValue(dataModelAPI.getMiddlenameAPI());
-            row.createCell(4).setCellValue(dataModelAPI.getGenderAPI());
-            row.createCell(7).setCellValue(dataModelAPI.getZipAPI());
-            row.createCell(8).setCellValue(dataModelAPI.getCountryAPI());
-            row.createCell(9).setCellValue(dataModelAPI.getRegionAPI());
-            row.createCell(10).setCellValue(dataModelAPI.getCityAPI());
-            row.createCell(11).setCellValue(dataModelAPI.getStreetAPI());
+            DataAPI dataAPI = new DataAPI();
+            dataAPI.getDataAPI();
+
+            row.createCell(0).setCellValue(dataAPI.nameAPI);
+            row.createCell(1).setCellValue(dataAPI.surnameAPI);
+            row.createCell(2).setCellValue(dataAPI.middlenameAPI);
+            row.createCell(4).setCellValue(dataAPI.genderAPI);
+            row.createCell(6).setCellValue(dataAPI.inn);
+            row.createCell(7).setCellValue(dataAPI.zipAPI);
+            row.createCell(8).setCellValue(dataAPI.country);
+            row.createCell(9).setCellValue(dataAPI.region);
+            row.createCell(10).setCellValue(dataAPI.cityAPI);
+            row.createCell(11).setCellValue(dataAPI.streetAPI);
+            row.createCell(12).setCellValue(dataAPI.house);
+            row.createCell(13).setCellValue(dataAPI.room);
 
         } else {
-            row.createCell(0).setCellValue(dataModel.getName());
-            row.createCell(1).setCellValue(dataModel.getSurname());
-            row.createCell(2).setCellValue(dataModel.getMiddlename());
-            row.createCell(3).setCellValue(dataModel.getAge());
-            row.createCell(4).setCellValue(dataModel.getGender());
-            row.createCell(5).setCellValue(dataModel.getDate());
-            row.createCell(7).setCellValue(dataModel.getZip());
-            row.createCell(8).setCellValue(dataModel.getCountryFromTxt());
-            row.createCell(9).setCellValue(dataModel.getRegionFromTxt());
-            row.createCell(10).setCellValue(dataModel.getCityFromTxt());
-            row.createCell(11).setCellValue(dataModel.getStreetFromTxt());
+            // если в бд есть данные
+            Connection conn = DriverManager.getConnection(URL, USER, PASS);
+            String dataBD ="SELECT * FROM persons";
+            //Statement stmt = conn.createStatement();
+            //ResultSet lastIdUserQuery = stmt.executeQuery(dataBD);
+
+            try (Statement stmt = conn.createStatement()){
+
+                try (ResultSet rs = stmt.executeQuery(dataBD)) {
+                    rs.next();
+                    System.out.println(rs.getObject(1, Boolean.class));
+
+
+                    if (rs.wasNull()){
+                        row.createCell(0).setCellValue(dataModel.getName());
+                        row.createCell(1).setCellValue(dataModel.getSurname());
+                        row.createCell(2).setCellValue(dataModel.getMiddlename());
+                        row.createCell(3).setCellValue(dataModel.getAge());
+                        row.createCell(4).setCellValue(dataModel.getGender());
+                        row.createCell(5).setCellValue(dataModel.getDate());
+                        row.createCell(6).setCellValue(dataModel.getInn());
+                        row.createCell(7).setCellValue(dataModel.getZip());
+                        row.createCell(8).setCellValue(dataModel.getCountryFromTxt());
+                        row.createCell(9).setCellValue(dataModel.getRegionFromTxt());
+                        row.createCell(10).setCellValue(dataModel.getCityFromTxt());
+                        row.createCell(11).setCellValue(dataModel.getStreetFromTxt());
+                        row.createCell(12).setCellValue(dataModel.getHouse());
+                        row.createCell(13).setCellValue(dataModel.getRoom());
+                    } else {
+
+                        DataModelDB dataModelDB = new DataModelDB();
+                        Integer id = 1;
+                        
+                        row.createCell(0).setCellValue(dataModelDB.getNameFromDB(id));
+                        row.createCell(1).setCellValue(dataModelDB.getSurnameFromDB(id));
+                        row.createCell(2).setCellValue(dataModelDB.getMiddlenameFromDB(id));
+                        //row.createCell(3).setCellValue(dataModelDB.getAgeFromDB(id));
+                        row.createCell(4).setCellValue(dataModelDB.getGenderFromDB(id));
+                        row.createCell(5).setCellValue(dataModelDB.getDateFromDB(id));
+                        row.createCell(6).setCellValue(dataModelDB.getInnFromDB(id));
+                        row.createCell(7).setCellValue(dataModelDB.getZipFromDB(id));
+                        row.createCell(8).setCellValue(dataModelDB.getCountryFromDB(id));
+                        row.createCell(9).setCellValue(dataModelDB.getRegionFromDB(id));
+                        row.createCell(10).setCellValue(dataModelDB.getCityFromDB(id));
+                        row.createCell(11).setCellValue(dataModelDB.getStreetFromDB(id));
+                        row.createCell(12).setCellValue(dataModelDB.getHouseFromDB(id));
+                        row.createCell(13).setCellValue(dataModelDB.getRoomFromDB(id));
+                        
+                        id++;
+                    }
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Отсутствует сооединение с интернетом. Данные будут взяты из БД");
+                e.printStackTrace();
+            }
+
+
+            /*if (rs.wasNull()) {
+
+            } else {  // если нет интернета и нет записей в бд
+                row.createCell(0).setCellValue(dataModel.getName());
+                row.createCell(1).setCellValue(dataModel.getSurname());
+                row.createCell(2).setCellValue(dataModel.getMiddlename());
+                row.createCell(3).setCellValue(dataModel.getAge());
+                row.createCell(4).setCellValue(dataModel.getGender());
+                row.createCell(5).setCellValue(dataModel.getDate());
+                row.createCell(6).setCellValue(dataModel.getInn());
+                row.createCell(7).setCellValue(dataModel.getZip());
+                row.createCell(8).setCellValue(dataModel.getCountryFromTxt());
+                row.createCell(9).setCellValue(dataModel.getRegionFromTxt());
+                row.createCell(10).setCellValue(dataModel.getCityFromTxt());
+                row.createCell(11).setCellValue(dataModel.getStreetFromTxt());
+                row.createCell(12).setCellValue(dataModel.getHouse());
+                row.createCell(13).setCellValue(dataModel.getRoom());
+            }*/
         }
         row.createCell(3).setCellValue(dataModel.getAge());
         row.createCell(5).setCellValue(dataModel.getDate());
-		row.createCell(6).setCellValue(dataModel.getInn());
-		row.createCell(12).setCellValue(dataModel.getHouse());
-		row.createCell(13).setCellValue(dataModel.getRoom());
     }
 
     private static List<DataModel> fillData() throws IOException {
