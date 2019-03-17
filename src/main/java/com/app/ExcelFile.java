@@ -86,7 +86,9 @@ public class ExcelFile {
             row.createCell(0).setCellValue(dataAPI.nameAPI);
             row.createCell(1).setCellValue(dataAPI.surnameAPI);
             row.createCell(2).setCellValue(dataAPI.middlenameAPI);
+            row.createCell(3).setCellValue(dataModel.getAge());
             row.createCell(4).setCellValue(dataAPI.genderAPI);
+            row.createCell(5).setCellValue(dataAPI.dateAPI);
             row.createCell(6).setCellValue(dataAPI.inn);
             row.createCell(7).setCellValue(dataAPI.zipAPI);
             row.createCell(8).setCellValue(dataAPI.country);
@@ -104,8 +106,7 @@ public class ExcelFile {
 
                 try (ResultSet rs = stmt.executeQuery(dataBD)) {
                     rs.next();
-                    System.out.println(rs.getObject(1, Boolean.class));
-
+                    rs.getObject(1, Boolean.class);
 
                     if (rs.wasNull()){
                         row.createCell(0).setCellValue(dataModel.getName());
@@ -125,13 +126,11 @@ public class ExcelFile {
                     } else {
 
                         DataModelDB dataModelDB = new DataModelDB();
-
                         id++;
 
                         row.createCell(0).setCellValue(dataModelDB.getNameFromDB(id));
                         row.createCell(1).setCellValue(dataModelDB.getSurnameFromDB(id));
                         row.createCell(2).setCellValue(dataModelDB.getMiddlenameFromDB(id));
-                        //row.createCell(3).setCellValue(dataModelDB.getAgeFromDB(id));
                         row.createCell(4).setCellValue(dataModelDB.getGenderFromDB(id));
                         row.createCell(5).setCellValue(dataModelDB.getDateFromDB(id));
                         row.createCell(6).setCellValue(dataModelDB.getInnFromDB(id));
@@ -145,14 +144,10 @@ public class ExcelFile {
                     }
                 }
             } catch (SQLException e) {
-                System.out.println("Отсутствует сооединение с интернетом. Данные будут взяты из БД");
-                e.printStackTrace();
-            }
 
+                System.out.println("Записи в БД отсутствуют. " +
+                            "Данные будут взяты из текстовых файлов");
 
-            /*if (rs.wasNull()) {
-
-            } else {  // если нет интернета и нет записей в бд
                 row.createCell(0).setCellValue(dataModel.getName());
                 row.createCell(1).setCellValue(dataModel.getSurname());
                 row.createCell(2).setCellValue(dataModel.getMiddlename());
@@ -167,10 +162,8 @@ public class ExcelFile {
                 row.createCell(11).setCellValue(dataModel.getStreetFromTxt());
                 row.createCell(12).setCellValue(dataModel.getHouse());
                 row.createCell(13).setCellValue(dataModel.getRoom());
-            }*/
+            }
         }
-        row.createCell(3).setCellValue(dataModel.getAge());
-        row.createCell(5).setCellValue(dataModel.getDate());
     }
 
     private static List<DataModel> fillData() throws IOException {

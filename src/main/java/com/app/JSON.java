@@ -32,7 +32,6 @@ class JSON {
             return response;
 
         } catch (Exception e){
-           //e.printStackTrace();
            System.out.println("Отсутствует сооединение с интернетом. Данные будут взяты из БД");
         }
 

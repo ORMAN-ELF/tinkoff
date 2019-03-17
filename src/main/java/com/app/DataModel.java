@@ -121,7 +121,7 @@ class DataModel {
         } else return "М";
     }
 
-    private LocalDate getDateForAge() {
+    LocalDate getDateForAge() {
         LocalDate startDate = LocalDate.of(1990, 1, 1);
         long start = startDate.toEpochDay();
 

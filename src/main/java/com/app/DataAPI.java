@@ -8,6 +8,8 @@ class DataAPI {
 
     private DataModelAPI dataModelAPI = new DataModelAPI();
     private DataModel dataModel = new DataModel();
+    private Connection conn = DriverManager.getConnection(URL, USER, PASS);
+    private int id;
     String nameAPI = dataModelAPI.getNameAPI();
     String surnameAPI = dataModelAPI.getSurnameAPI();
     String middlenameAPI = dataModelAPI.getMiddlenameAPI();
@@ -17,12 +19,10 @@ class DataAPI {
     String region = dataModelAPI.getRegionAPI();
     String cityAPI = dataModelAPI.getCityAPI();
     String streetAPI = dataModelAPI.getStreetAPI();
-    private String dateAPI = String.valueOf("2006/12/23");
+    String dateAPI = String.valueOf(dataModel.getDateForAge());
     String inn = dataModel.getInn();
     Integer house = dataModel.getHouse();
     Integer room = dataModel.getRoom();
-    private Connection conn = DriverManager.getConnection(URL, USER, PASS);
-    private int id;
 
 
     DataAPI() throws Exception { }
@@ -42,14 +42,14 @@ class DataAPI {
         }
 
         if(id >= 1){
-            String updateAddressData = "UPDATE address SET postcode = " + zipAPI +
-                    ", country = " + country + ", region = " + region +
-                    ", city = " + cityAPI + ", street = " + streetAPI +
-                    ", house = " + house + ", flat = " + room + " WHERE id =" + id;
+            String updateAddressData = "UPDATE address SET postcode = '" + zipAPI +
+                    "', country = '" + country + "', region = '" + region +
+                    "', city = '" + cityAPI + "', street = '" + streetAPI +
+                    "', house = '" + house + "', flat = '" + room + "' WHERE id = '" + id + "'";
 
-            String updatePersonsData = "UPDATE persons SET birthday = " + dateAPI +
-                    ", gender = " + genderAPI + ", inn = " + inn +
-                    ", address_id = " + id + " WHERE id =" + id;
+            String updatePersonsData = "UPDATE persons SET birthday = '" + dateAPI +
+                    "', gender = '" + genderAPI + "', inn = '" + inn +
+                    "', address_id = '" + id + "' WHERE id = '" + id + "'";
             stmt.executeUpdate(updateAddressData);
             stmt.executeUpdate(updatePersonsData);
 
