@@ -24,6 +24,7 @@ import static com.app.ConfigDB.*;
 public class ExcelFile {
 
     private static Boolean internet;
+    private static Integer id = 0;
 
     public static void main(String[] args) throws Exception {
 
@@ -96,11 +97,8 @@ public class ExcelFile {
             row.createCell(13).setCellValue(dataAPI.room);
 
         } else {
-            // если в бд есть данные
             Connection conn = DriverManager.getConnection(URL, USER, PASS);
             String dataBD ="SELECT * FROM persons";
-            //Statement stmt = conn.createStatement();
-            //ResultSet lastIdUserQuery = stmt.executeQuery(dataBD);
 
             try (Statement stmt = conn.createStatement()){
 
@@ -127,8 +125,9 @@ public class ExcelFile {
                     } else {
 
                         DataModelDB dataModelDB = new DataModelDB();
-                        Integer id = 1;
-                        
+
+                        id++;
+
                         row.createCell(0).setCellValue(dataModelDB.getNameFromDB(id));
                         row.createCell(1).setCellValue(dataModelDB.getSurnameFromDB(id));
                         row.createCell(2).setCellValue(dataModelDB.getMiddlenameFromDB(id));
@@ -143,11 +142,8 @@ public class ExcelFile {
                         row.createCell(11).setCellValue(dataModelDB.getStreetFromDB(id));
                         row.createCell(12).setCellValue(dataModelDB.getHouseFromDB(id));
                         row.createCell(13).setCellValue(dataModelDB.getRoomFromDB(id));
-                        
-                        id++;
                     }
                 }
-
             } catch (SQLException e) {
                 System.out.println("Отсутствует сооединение с интернетом. Данные будут взяты из БД");
                 e.printStackTrace();
