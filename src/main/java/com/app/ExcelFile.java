@@ -17,7 +17,7 @@ import static com.app.ConfigDB.*;
 /**
  * ExcelFile. Класс представляет собой созданный и заполненный данными excel документ.
  *
- * @version:   0.3 10 марта 2019
+ * @version:   18 марта 2019
  * @Copyright  Наталья
  */
 
@@ -103,10 +103,9 @@ public class ExcelFile {
             String dataBD ="SELECT * FROM persons";
 
             try (Statement stmt = conn.createStatement()){
-
-                try (ResultSet rs = stmt.executeQuery(dataBD)) {
-                    rs.next();
-                    rs.getObject(1, Boolean.class);
+                ResultSet rs = stmt.executeQuery(dataBD);
+                rs.next();
+                rs.getObject(1, Boolean.class);
 
                     if (rs.wasNull()){
                         row.createCell(0).setCellValue(dataModel.getName());
@@ -142,7 +141,7 @@ public class ExcelFile {
                         row.createCell(12).setCellValue(dataModelDB.getHouseFromDB(id));
                         row.createCell(13).setCellValue(dataModelDB.getRoomFromDB(id));
                     }
-                }
+
             } catch (SQLException e) {
 
                 System.out.println("Записи в БД отсутствуют. " +

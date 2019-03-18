@@ -6,6 +6,14 @@ import static com.app.ConfigDB.PASS;
 import static com.app.ConfigDB.URL;
 import static com.app.ConfigDB.USER;
 
+/**
+ * DataModelDB. Класс предназначен для получения данных из бд
+ *
+ * @version:   18 марта 2019
+ * @Copyright  Наталья
+ */
+
+
 class DataModelDB {
 
     private Connection conn = DriverManager.getConnection(URL, USER, PASS);
@@ -25,7 +33,6 @@ class DataModelDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return returnVar;
     }
 

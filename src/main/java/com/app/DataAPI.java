@@ -4,6 +4,13 @@ import java.sql.*;
 
 import static com.app.ConfigDB.*;
 
+/**
+ * DataAPI. Класс предназначен для сбора данных из API и записи этих данных в БД.
+ *
+ * @version:   18 марта 2019
+ * @Copyright  Наталья
+ */
+
 class DataAPI {
 
     private DataModelAPI dataModelAPI = new DataModelAPI();
