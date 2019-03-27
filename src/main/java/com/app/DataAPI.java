@@ -38,10 +38,10 @@ class DataAPI {
 
         String updateIDPersons ="SELECT id FROM persons where surname = '" + surnameAPI + "' and name = '"
                 + nameAPI + "' and middlename = '" + middlenameAPI + "'";
-        Statement stmt = conn.createStatement();
+        Statement statement = conn.createStatement();
 
-        try (Statement stmt2 = conn.createStatement()) {
-            ResultSet rs = stmt2.executeQuery(updateIDPersons);
+        try (Statement statement2 = conn.createStatement()) {
+            ResultSet rs = statement2.executeQuery(updateIDPersons);
             while (rs.next()) {
             id = rs.getInt("id"); }
         } catch (SQLException e) {
@@ -57,42 +57,42 @@ class DataAPI {
             String updatePersonsData = "UPDATE persons SET birthday = '" + dateAPI +
                     "', gender = '" + genderAPI + "', inn = '" + inn +
                     "', address_id = '" + id + "' WHERE id = '" + id + "'";
-            stmt.executeUpdate(updateAddressData);
-            stmt.executeUpdate(updatePersonsData);
+            statement.executeUpdate(updateAddressData);
+            statement.executeUpdate(updatePersonsData);
 
         } else {
-            String queryAddress = "INSERT INTO tinkoff.address " +
+            String queryAddress = "INSERT INTO address " +
                     "(postcode, country, region, city, street, house, flat) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-            String queryPersons = "INSERT INTO tinkoff.persons " +
+            String queryPersons = "INSERT INTO persons " +
                     "(surname, name, middlename, birthday, gender, inn, address_id) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-            PreparedStatement stmtP2 = conn.prepareStatement(queryAddress);
-            stmtP2.setString(1, zipAPI);
-            stmtP2.setString(2, country);
-            stmtP2.setString(3, region);
-            stmtP2.setString(4, cityAPI);
-            stmtP2.setString(5, streetAPI);
-            stmtP2.setInt(6, house);
-            stmtP2.setInt(7, room);
-            stmtP2.executeUpdate();
+            PreparedStatement statementPrepared2 = conn.prepareStatement(queryAddress);
+            statementPrepared2.setString(1, zipAPI);
+            statementPrepared2.setString(2, country);
+            statementPrepared2.setString(3, region);
+            statementPrepared2.setString(4, cityAPI);
+            statementPrepared2.setString(5, streetAPI);
+            statementPrepared2.setInt(6, house);
+            statementPrepared2.setInt(7, room);
+            statementPrepared2.executeUpdate();
 
-            PreparedStatement stmtP = conn.prepareStatement(queryPersons);
-            stmtP.setString(1, surnameAPI);
-            stmtP.setString(2, nameAPI);
-            stmtP.setString(3, middlenameAPI);
-            stmtP.setString(4, dateAPI);
-            stmtP.setString(5, genderAPI);
-            stmtP.setString(6, inn);
-            stmtP.setInt(7, 1);
-            stmtP.executeUpdate();
+            PreparedStatement statementPrepared = conn.prepareStatement(queryPersons);
+            statementPrepared.setString(1, surnameAPI);
+            statementPrepared.setString(2, nameAPI);
+            statementPrepared.setString(3, middlenameAPI);
+            statementPrepared.setString(4, dateAPI);
+            statementPrepared.setString(5, genderAPI);
+            statementPrepared.setString(6, inn);
+            statementPrepared.setInt(7, 1);
+            statementPrepared.executeUpdate();
 
-            String queryAddressID = "UPDATE tinkoff.persons inner join tinkoff.address " +
+            String queryAddressID = "UPDATE persons inner join address " +
                     "on address.id=persons.id set persons.address_id=address.id";
-            stmt = conn.createStatement();
-            stmt.executeUpdate(queryAddressID);
+            statement = conn.createStatement();
+            statement.executeUpdate(queryAddressID);
         }
 
     }

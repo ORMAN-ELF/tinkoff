@@ -29,7 +29,7 @@ public class ExcelFile {
     public static void main(String[] args) throws Exception {
 
 
-        JSON getJSON = new JSON();
+        RequestToAPI getJSON = new RequestToAPI();
         internet = getJSON.getJson() != null;
 
         //создание самого excel файла в памяти
@@ -99,15 +99,15 @@ public class ExcelFile {
             row.createCell(13).setCellValue(dataAPI.room);
 
         } else {
-            Connection conn = DriverManager.getConnection(URL, USER, PASS);
+            Connection connection = DriverManager.getConnection(URL, USER, PASS);
             String dataBD ="SELECT * FROM persons";
 
-            try (Statement stmt = conn.createStatement()){
-                ResultSet rs = stmt.executeQuery(dataBD);
-                rs.next();
-                rs.getObject(1, Boolean.class);
+            try (Statement statement = connection.createStatement()){
+                ResultSet resultSet = statement.executeQuery(dataBD);
+                resultSet.next();
+                resultSet.getObject(1, Boolean.class);
 
-                    if (rs.wasNull()){
+                    if (resultSet.wasNull()){
                         row.createCell(0).setCellValue(dataModel.getName());
                         row.createCell(1).setCellValue(dataModel.getSurname());
                         row.createCell(2).setCellValue(dataModel.getMiddlename());

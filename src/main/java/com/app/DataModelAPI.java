@@ -14,7 +14,7 @@ class DataModelAPI {
     DataModelAPI() {}
 
     private static MyPojo getModelAPI() throws Exception {
-        JSON getJSON = new JSON();
+        RequestToAPI getJSON = new RequestToAPI();
         StringBuffer response = getJSON.getJson();
         var mapper = new ObjectMapper();
         var rootNode = mapper.readTree(String.valueOf(response));

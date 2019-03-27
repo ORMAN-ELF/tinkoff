@@ -16,7 +16,7 @@ import static com.app.ConfigDB.USER;
 
 class DataModelDB {
 
-    private Connection conn = DriverManager.getConnection(URL, USER, PASS);
+    private Connection connection = DriverManager.getConnection(URL, USER, PASS);
 
     DataModelDB() throws SQLException {
     }
@@ -25,10 +25,10 @@ class DataModelDB {
         String varFromDB = "SELECT " + nameVar + " FROM " + nameDB + " WHERE id = '" + id + "'";
 
         String returnVar = null;
-        try (Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery(varFromDB);
-            while (rs.next()) {
-               returnVar  = rs.getString(nameVar);
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(varFromDB);
+            while (resultSet.next()) {
+               returnVar = resultSet.getString(nameVar);
             }
         } catch (SQLException e) {
             e.printStackTrace();

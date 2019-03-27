@@ -1,5 +1,7 @@
 package com.app;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -99,6 +101,7 @@ public class Location {
         this.additionalProperties.put(name, value);
     }
 
+    @JsonIgnore
     public Location withAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
         return this;
