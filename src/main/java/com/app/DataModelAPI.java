@@ -1,5 +1,6 @@
 package com.app;
 
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -16,7 +17,7 @@ class DataModelAPI {
     private static MyPojo getModelAPI() throws Exception {
         RequestToAPI getJSON = new RequestToAPI();
         StringBuffer response = getJSON.getJson();
-        var mapper = new ObjectMapper();
+        var mapper = new ObjectMapper().configure(MapperFeature.USE_ANNOTATIONS, true);
         var rootNode = mapper.readTree(String.valueOf(response));
         return mapper.readValue(rootNode.toString(), MyPojo.class);
     }

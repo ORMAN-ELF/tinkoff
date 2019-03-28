@@ -15,7 +15,7 @@ class DataAPI {
 
     private DataModelAPI dataModelAPI = new DataModelAPI();
     private DataModel dataModel = new DataModel();
-    private Connection conn = DriverManager.getConnection(URL, USER, PASS);
+    private Connection connection = DriverManager.getConnection(URL, USER, PASS);
     private int id;
     String nameAPI = dataModelAPI.getNameAPI();
     String surnameAPI = dataModelAPI.getSurnameAPI();
@@ -36,19 +36,9 @@ class DataAPI {
 
     void getDataAPI() throws Exception {
 
-        String updateIDPersons ="SELECT id FROM persons where surname = '" + surnameAPI + "' and name = '"
-                + nameAPI + "' and middlename = '" + middlenameAPI + "'";
-        Statement statement = conn.createStatement();
+        Statement statement = connection.createStatement();
 
-        try (Statement statement2 = conn.createStatement()) {
-            ResultSet rs = statement2.executeQuery(updateIDPersons);
-            while (rs.next()) {
-            id = rs.getInt("id"); }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        if(id >= 1){
+        if(getUserFromDB() >= 1){
             String updateAddressData = "UPDATE address SET postcode = '" + zipAPI +
                     "', country = '" + country + "', region = '" + region +
                     "', city = '" + cityAPI + "', street = '" + streetAPI +
@@ -69,7 +59,7 @@ class DataAPI {
                     "(surname, name, middlename, birthday, gender, inn, address_id) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-            PreparedStatement statementPrepared2 = conn.prepareStatement(queryAddress);
+            PreparedStatement statementPrepared2 = connection.prepareStatement(queryAddress);
             statementPrepared2.setString(1, zipAPI);
             statementPrepared2.setString(2, country);
             statementPrepared2.setString(3, region);
@@ -79,7 +69,7 @@ class DataAPI {
             statementPrepared2.setInt(7, room);
             statementPrepared2.executeUpdate();
 
-            PreparedStatement statementPrepared = conn.prepareStatement(queryPersons);
+            PreparedStatement statementPrepared = connection.prepareStatement(queryPersons);
             statementPrepared.setString(1, surnameAPI);
             statementPrepared.setString(2, nameAPI);
             statementPrepared.setString(3, middlenameAPI);
@@ -91,9 +81,24 @@ class DataAPI {
 
             String queryAddressID = "UPDATE persons inner join address " +
                     "on address.id=persons.id set persons.address_id=address.id";
-            statement = conn.createStatement();
+            statement = connection.createStatement();
             statement.executeUpdate(queryAddressID);
         }
 
+    }
+
+    private int getUserFromDB() {
+        String updateIDPersons ="SELECT id FROM persons where surname = '" + surnameAPI + "' and name = '"
+                + nameAPI + "' and middlename = '" + middlenameAPI + "'";
+
+        try (Statement statement2 = connection.createStatement()) {
+            ResultSet resultSet = statement2.executeQuery(updateIDPersons);
+            while (resultSet.next()) {
+                id = resultSet.getInt("id"); }
+                return id;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 1;
     }
 }
