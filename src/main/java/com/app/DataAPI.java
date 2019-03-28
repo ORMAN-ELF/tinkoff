@@ -99,6 +99,6 @@ class DataAPI {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 1;
+        return id;
     }
 }
