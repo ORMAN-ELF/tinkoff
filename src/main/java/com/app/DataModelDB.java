@@ -1,6 +1,8 @@
 package com.app;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.Period;
 
 import static com.app.ConfigDB.PASS;
 import static com.app.ConfigDB.URL;
@@ -46,6 +48,14 @@ class DataModelDB {
 
     String getMiddlenameFromDB(int id) {
         return returnDataFromDB("middlename","persons", id);
+    }
+
+    Integer getAgeFromDB(int id) {
+        LocalDate today = LocalDate.now();
+        LocalDate birthday = LocalDate.parse(getDateFromDB(id));
+
+        Period period = Period.between(birthday, today);
+        return period.getYears();
     }
 
     String getGenderFromDB(int id) {

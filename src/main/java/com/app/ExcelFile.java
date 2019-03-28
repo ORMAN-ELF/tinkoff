@@ -130,6 +130,7 @@ public class ExcelFile {
                         row.createCell(0).setCellValue(dataModelDB.getNameFromDB(id));
                         row.createCell(1).setCellValue(dataModelDB.getSurnameFromDB(id));
                         row.createCell(2).setCellValue(dataModelDB.getMiddlenameFromDB(id));
+                        row.createCell(3).setCellValue(dataModelDB.getAgeFromDB(id));
                         row.createCell(4).setCellValue(dataModelDB.getGenderFromDB(id));
                         row.createCell(5).setCellValue(dataModelDB.getDateFromDB(id));
                         row.createCell(6).setCellValue(dataModelDB.getInnFromDB(id));
